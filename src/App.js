@@ -1,55 +1,49 @@
-
 import "./App.css";
-import Product from "./Product/Product";
 import Products from "./Product/Products";
-import CartData from "./Cart/CartData";
 import Navbar from "./Header/Navbar";
 import Baner from "./UI/Baner";
-import { useContext } from "react";
+import React, { useContext } from "react";
 import CartContext from "./store/cart-context";
 import About from "./Header/About";
-import { createBrowserRouter } from "react-router-dom";
+import {
+  BrowserRouter,
+  Route,
+  Routes,
+  createBrowserRouter,
+} from "react-router-dom";
 import { RouterProvider } from "react-router-dom";
-
-const DefaultLayout = ({ children }) => (
-  <>
-    <Navbar />
-    <Baner />
-    {children}
-  </>
-);
-
-const router = createBrowserRouter([
-  {
-    path: "/",
-    element: (
-      <DefaultLayout>
-        <Products />
-      </DefaultLayout>
-    ),
-  },
-  {
-    path: "/about",
-    element: (
-      <DefaultLayout>
-        <About />
-      </DefaultLayout>
-    ),
-  },
-]);
+import Home from "./Home/Home";
+import Footer from "./footer/Footer";
+import ContactUsPage from "./Header/ContactUsPage";
+import ProductDetails from "./Product/ProductDetails";
+import Login from "./AuthForm/Login";
 
 function App() {
   const cartCtx = useContext(CartContext);
 
   return (
-    <div className=" bg-slate-300">
-      <Navbar />
-      <Baner />
-      <Products />
-      {cartCtx.isCartVisible && <CartData />}
-    </div>
+    <BrowserRouter>
+      <div>
+        <header>
+          <Navbar />
+          <Baner />
+        </header>
+        <main>
+          <Routes>
+            <Route path="/" element={<Products />} />
+            <Route path="/about" element={<About />} />
+            <Route path="/home" element={<Home />} />
+            <Route path="/product/:productId" element={<ProductDetails />} />
+            <Route path="/contactus" element={<ContactUsPage />} />
+            <Route path="/login" element={<Login />} />
+          </Routes>
+        </main>
+        <footer>
+          <Footer />
+        </footer>
+      </div>
+    </BrowserRouter>
   );
-  return <RouterProvider router={router}></RouterProvider>;
 }
 
 export default App;
